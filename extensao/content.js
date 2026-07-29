@@ -92,18 +92,29 @@ function precoJson(objeto) {
 }
 
 function paginaDeSeguranca() {
-  const conteudo = document.documentElement.innerHTML.toLowerCase();
+  const conteudoVisivel = (document.body?.innerText || "").toLowerCase();
+  const titulo = document.title.toLowerCase();
   const marcadores = [
     "checking your browser",
     "verify you are human",
     "verifique se você é humano",
     "verifique se voce e humano",
     "executando verificação",
-    "executando verifica",
-    "cf-challenge",
-    "challenge-platform"
+    "executando verifica"
   ];
-  return marcadores.some((marcador) => conteudo.includes(marcador));
+  const tituloDeDesafio =
+    titulo.includes("just a moment") ||
+    titulo.includes("um momento") ||
+    titulo.includes("attention required");
+  const formularioDeDesafio = document.querySelector(
+    "#challenge-form, #challenge-running, #cf-challenge-running"
+  );
+
+  return Boolean(
+    tituloDeDesafio ||
+      formularioDeDesafio ||
+      marcadores.some((marcador) => conteudoVisivel.includes(marcador))
+  );
 }
 
 function coletarLinksDaListagem() {
