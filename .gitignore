@@ -1,0 +1,49 @@
+# Ambientes virtuais
+.venv/
+venv/
+env/
+
+# Cache e arquivos compilados do Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Pacotes e artefatos de build
+*.egg-info/
+.eggs/
+build/
+dist/
+
+# Testes, cobertura e ferramentas
+.pytest_cache/
+.coverage
+.coverage.*
+htmlcov/
+.mypy_cache/
+.ruff_cache/
+
+# Variaveis de ambiente e segredos locais
+.env
+.env.*
+!.env.example
+
+# Editores e sistema operacional
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Dados e resultados gerados localmente
+data/
+*.db
+*.sqlite
+*.sqlite3
+*.csv
+*.xlsx
+
+# Logs e arquivos temporarios
+*.log
+*.tmp
+*.bak
+~$*
