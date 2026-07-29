@@ -233,6 +233,8 @@ function proximaPagina() {
 function extrairAnuncio() {
   const jsonLd = jsonLdImovel();
   const textoPagina = document.body?.innerText.replace(/\s+/g, " ").trim() || "";
+  const precoDoTitulo =
+    somentePreco(document.title) || somentePreco(meta("og:title"));
   const titulo =
     jsonLd.name ||
     primeiroTexto([
@@ -252,7 +254,10 @@ function extrairAnuncio() {
   return {
     url: location.href,
     titulo: titulo ? String(titulo).trim() : null,
-    preco: somentePreco(precoJson(jsonLd)) || precoDaPagina(textoPagina),
+    preco:
+      precoDoTitulo ||
+      somentePreco(precoJson(jsonLd)) ||
+      precoDaPagina(textoPagina),
     endereco:
       enderecoJson(jsonLd.address) ||
       primeiroTexto([

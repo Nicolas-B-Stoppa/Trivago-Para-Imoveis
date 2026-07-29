@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Pesquisador de Imóveis",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Coleta anúncios do Imovelweb usando uma aba normal do navegador.",
   "permissions": [
     "activeTab",

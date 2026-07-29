@@ -81,6 +81,26 @@ def test_ignora_ocultar_anuncio_ao_extrair_preco() -> None:
     assert imovel.preco == "R$ 200.000"
 
 
+def test_prioriza_preco_informado_no_titulo_da_pagina() -> None:
+    html = """
+    <html>
+      <head>
+        <title>Apartamento em Curitiba - R$ 2.700.000 - Imovelweb</title>
+      </head>
+      <body>
+        <button class="price-action">Ocultar anúncio</button>
+      </body>
+    </html>
+    """
+
+    imovel = extrair_imovel(
+        html,
+        "https://www.imovelweb.com.br/propriedades/101.html",
+    )
+
+    assert imovel.preco == "R$ 2.700.000"
+
+
 def test_rejeita_url_de_outro_site() -> None:
     try:
         validar_url("https://example.com/anuncio")

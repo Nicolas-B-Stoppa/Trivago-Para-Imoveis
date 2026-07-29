@@ -153,7 +153,9 @@ def extrair_imovel(html: str, url: str) -> Imovel:
     return Imovel(
         url=url,
         titulo=str(titulo).strip() if titulo else _meta(soup, "og:title"),
-        preco=_somente_preco(_preco_json(json_ld))
+        preco=_somente_preco(_texto(soup.title))
+        or _somente_preco(_meta(soup, "og:title"))
+        or _somente_preco(_preco_json(json_ld))
         or _preco_pagina(soup, texto_pagina),
         endereco=_endereco_json(json_ld.get("address"))
         or _primeiro_texto(
