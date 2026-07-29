@@ -51,7 +51,9 @@ No Edge:
 Comece com uma pagina e poucos anuncios. A extensao reutiliza a mesma aba e
 espera o intervalo configurado entre navegacoes. Se encontrar outra verificacao,
 ela pausa para que voce a conclua manualmente. Depois, abra a extensao e clique
-em **Continuar**.
+em **Continuar**. Ao final, use **Exportar Excel** para gerar uma planilha
+`.xlsx` formatada ou **Exportar CSV** para o formato de texto compativel com
+Excel em portugues.
 
 ## Testes
 

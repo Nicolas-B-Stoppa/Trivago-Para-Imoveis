@@ -9,7 +9,8 @@ const elementos = {
   iniciar: document.querySelector("#iniciar"),
   continuar: document.querySelector("#continuar"),
   parar: document.querySelector("#parar"),
-  exportar: document.querySelector("#exportar"),
+  exportarExcel: document.querySelector("#exportarExcel"),
+  exportarCsv: document.querySelector("#exportarCsv"),
   limpar: document.querySelector("#limpar")
 };
 
@@ -32,7 +33,8 @@ function renderizar(estado) {
   elementos.parar.disabled = !estado.executando;
   elementos.continuar.disabled =
     !estado.executando || !estado.aguardandoSeguranca;
-  elementos.exportar.disabled = estado.resultados.length === 0;
+  elementos.exportarExcel.disabled = estado.resultados.length === 0;
+  elementos.exportarCsv.disabled = estado.resultados.length === 0;
   elementos.limpar.disabled = estado.executando;
 }
 
@@ -68,7 +70,22 @@ elementos.parar.addEventListener("click", async () => {
   renderizar(await mensagem({ tipo: "parar" }));
 });
 
-elementos.exportar.addEventListener("click", async () => {
+elementos.exportarExcel.addEventListener("click", async () => {
+  const estado = await mensagem({ tipo: "obterEstado" });
+  const arquivo = criarArquivoXlsx(estado.resultados);
+  const url = URL.createObjectURL(arquivo);
+  try {
+    await chrome.downloads.download({
+      url,
+      filename: `imoveis-${new Date().toISOString().slice(0, 10)}.xlsx`,
+      saveAs: true
+    });
+  } finally {
+    setTimeout(() => URL.revokeObjectURL(url), 30000);
+  }
+});
+
+elementos.exportarCsv.addEventListener("click", async () => {
   await mensagem({ tipo: "exportar" });
 });
 

@@ -23,3 +23,11 @@ def test_extensao_so_tem_permissao_de_host_para_imovelweb() -> None:
     manifesto = json.loads((PASTA_EXTENSAO / "manifest.json").read_text(encoding="utf-8"))
 
     assert manifesto["host_permissions"] == ["https://www.imovelweb.com.br/*"]
+
+
+def test_popup_carrega_exportador_xlsx_local() -> None:
+    popup = (PASTA_EXTENSAO / "popup.html").read_text(encoding="utf-8")
+
+    assert '<script src="xlsx.js"></script>' in popup
+    assert (PASTA_EXTENSAO / "xlsx.js").is_file()
+    assert "Exportar Excel" in popup
