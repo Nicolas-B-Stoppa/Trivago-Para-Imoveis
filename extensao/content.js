@@ -106,9 +106,21 @@ function paginaDeSeguranca() {
     titulo.includes("just a moment") ||
     titulo.includes("um momento") ||
     titulo.includes("attention required");
-  const formularioDeDesafio = document.querySelector(
-    "#challenge-form, #challenge-running, #cf-challenge-running"
-  );
+  const formularioDeDesafio = [
+    ...document.querySelectorAll(
+      "#challenge-form, #challenge-running, #cf-challenge-running"
+    )
+  ].some((elemento) => {
+    const estilo = getComputedStyle(elemento);
+    const retangulo = elemento.getBoundingClientRect();
+    return (
+      estilo.display !== "none" &&
+      estilo.visibility !== "hidden" &&
+      Number.parseFloat(estilo.opacity || "1") > 0 &&
+      retangulo.width > 0 &&
+      retangulo.height > 0
+    );
+  });
 
   return Boolean(
     tituloDeDesafio ||
