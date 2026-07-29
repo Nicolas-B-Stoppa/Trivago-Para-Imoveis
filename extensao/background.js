@@ -220,10 +220,10 @@ chrome.runtime.onMessage.addListener((mensagem, _remetente, responder) => {
       ];
       const escapar = (valor) =>
         `"${String(valor ?? "").replaceAll('"', '""')}"`;
-      const csv = [
-        colunas.join(","),
+      const csv = "\uFEFF" + [
+        colunas.join(";"),
         ...estado.resultados.map((item) =>
-          colunas.map((coluna) => escapar(item[coluna])).join(",")
+          colunas.map((coluna) => escapar(item[coluna])).join(";")
         )
       ].join("\r\n");
       const url = `data:text/csv;charset=utf-8,${encodeURIComponent(csv)}`;
