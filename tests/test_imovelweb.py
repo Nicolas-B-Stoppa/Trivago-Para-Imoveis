@@ -63,6 +63,24 @@ def test_extrai_variacoes_de_area_quartos_e_referencia() -> None:
     assert imovel.codigo == "ABC-987"
 
 
+def test_ignora_ocultar_anuncio_ao_extrair_preco() -> None:
+    html = """
+    <html>
+      <body>
+        <button class="price-action">Ocultar anúncio</button>
+        <h2>Venda R$ 200.000</h2>
+      </body>
+    </html>
+    """
+
+    imovel = extrair_imovel(
+        html,
+        "https://www.imovelweb.com.br/propriedades/789.html",
+    )
+
+    assert imovel.preco == "R$ 200.000"
+
+
 def test_rejeita_url_de_outro_site() -> None:
     try:
         validar_url("https://example.com/anuncio")

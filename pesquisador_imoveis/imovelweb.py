@@ -101,6 +101,31 @@ def _preco_json(objeto: dict[str, Any]) -> str | None:
     return f"{prefixo}{oferta['price']}"
 
 
+def _somente_preco(valor: str | None) -> str | None:
+    if not valor:
+        return None
+    if correspondencia := re.search(r"R\$\s*[\d.]+(?:,\d{1,2})?", valor):
+        return re.sub(r"\s+", " ", correspondencia.group(0))
+    if re.search(r"consultar\s+pre[cç]o", valor, flags=re.IGNORECASE):
+        return "Consultar preço"
+    return None
+
+
+def _preco_pagina(soup: BeautifulSoup, texto_pagina: str) -> str | None:
+    seletores = (
+        '[data-qa="POSTING_CARD_PRICE"]',
+        '[data-qa="POSTING_PRICE"]',
+        '[data-qa="PRICE"]',
+        '[data-testid*="price" i]',
+        '[class*="price" i]',
+    )
+    for seletor in seletores:
+        for elemento in soup.select(seletor):
+            if preco := _somente_preco(_texto(elemento)):
+                return preco
+    return _somente_preco(texto_pagina)
+
+
 def _caracteristica(texto_pagina: str, padroes: Iterable[str]) -> str | None:
     for padrao in padroes:
         if correspondencia := re.search(padrao, texto_pagina, flags=re.IGNORECASE):
@@ -128,11 +153,8 @@ def extrair_imovel(html: str, url: str) -> Imovel:
     return Imovel(
         url=url,
         titulo=str(titulo).strip() if titulo else _meta(soup, "og:title"),
-        preco=_preco_json(json_ld)
-        or _primeiro_texto(
-            soup,
-            ('[data-qa="POSTING_CARD_PRICE"]', '[class*="price"]'),
-        ),
+        preco=_somente_preco(_preco_json(json_ld))
+        or _preco_pagina(soup, texto_pagina),
         endereco=_endereco_json(json_ld.get("address"))
         or _primeiro_texto(
             soup,

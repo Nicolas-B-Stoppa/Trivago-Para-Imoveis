@@ -91,6 +91,32 @@ function precoJson(objeto) {
   return `${prefixo}${oferta.price}`;
 }
 
+function somentePreco(valor) {
+  if (!valor) return null;
+  const textoValor = String(valor).replace(/\s+/g, " ").trim();
+  const monetario = textoValor.match(/R\$\s*[\d.]+(?:,\d{1,2})?/i);
+  if (monetario) return monetario[0].replace(/\s+/g, " ");
+  if (/consultar\s+pre[cç]o/i.test(textoValor)) return "Consultar preço";
+  return null;
+}
+
+function precoDaPagina(textoPagina) {
+  const seletores = [
+    '[data-qa="POSTING_CARD_PRICE"]',
+    '[data-qa="POSTING_PRICE"]',
+    '[data-qa="PRICE"]',
+    '[data-testid*="price" i]',
+    '[class*="price" i]'
+  ];
+  for (const seletor of seletores) {
+    for (const elemento of document.querySelectorAll(seletor)) {
+      const preco = somentePreco(texto(elemento));
+      if (preco) return preco;
+    }
+  }
+  return somentePreco(textoPagina);
+}
+
 function paginaDeSeguranca() {
   const conteudoVisivel = (document.body?.innerText || "").toLowerCase();
   const titulo = document.title.toLowerCase();
@@ -226,12 +252,7 @@ function extrairAnuncio() {
   return {
     url: location.href,
     titulo: titulo ? String(titulo).trim() : null,
-    preco:
-      precoJson(jsonLd) ||
-      primeiroTexto([
-        '[data-qa="POSTING_CARD_PRICE"]',
-        '[class*="price"]'
-      ]),
+    preco: somentePreco(precoJson(jsonLd)) || precoDaPagina(textoPagina),
     endereco:
       enderecoJson(jsonLd.address) ||
       primeiroTexto([
