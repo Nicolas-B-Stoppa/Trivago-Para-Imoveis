@@ -1,0 +1,88 @@
+:root {
+  color-scheme: light;
+  font-family: Inter, "Segoe UI", sans-serif;
+  color: #202124;
+  background: #f7f8fa;
+}
+
+body {
+  margin: 0;
+  width: 360px;
+}
+
+main {
+  padding: 18px;
+}
+
+h1 {
+  margin: 0 0 12px;
+  font-size: 20px;
+}
+
+#status {
+  min-height: 38px;
+  margin: 0 0 12px;
+  padding: 10px;
+  border-left: 4px solid #1565c0;
+  border-radius: 4px;
+  background: #e8f1fb;
+  line-height: 1.35;
+}
+
+.progresso {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 14px;
+  font-size: 12px;
+}
+
+label {
+  display: grid;
+  grid-template-columns: 1fr 88px;
+  align-items: center;
+  gap: 10px;
+  margin: 8px 0;
+  font-size: 13px;
+}
+
+input {
+  box-sizing: border-box;
+  width: 100%;
+  padding: 6px;
+}
+
+.acoes {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin: 16px 0;
+}
+
+button {
+  padding: 9px;
+  border: 1px solid #b8bdc5;
+  border-radius: 5px;
+  background: white;
+  cursor: pointer;
+}
+
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+button.primario {
+  border-color: #1565c0;
+  color: white;
+  background: #1565c0;
+}
+
+button.perigo {
+  color: #a51d1d;
+}
+
+small {
+  display: block;
+  color: #5f6368;
+  line-height: 1.4;
+}

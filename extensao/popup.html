@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Pesquisador de Imóveis</title>
+    <link rel="stylesheet" href="popup.css">
+  </head>
+  <body>
+    <main>
+      <h1>Pesquisador de Imóveis</h1>
+      <p id="status">Carregando...</p>
+
+      <div class="progresso">
+        <span>Páginas: <strong id="paginas">0</strong></span>
+        <span>Imóveis: <strong id="resultados">0</strong></span>
+        <span>Na fila: <strong id="fila">0</strong></span>
+      </div>
+
+      <label>
+        Máximo de páginas
+        <input id="maxPaginas" type="number" min="1" max="100" value="1">
+      </label>
+      <label>
+        Máximo de anúncios
+        <input id="maxAnuncios" type="number" min="1" max="1000" value="20">
+      </label>
+      <label>
+        Intervalo entre páginas (segundos)
+        <input id="intervalo" type="number" min="3" max="120" value="8">
+      </label>
+
+      <div class="acoes">
+        <button id="iniciar" class="primario">Iniciar coleta</button>
+        <button id="continuar">Continuar</button>
+        <button id="parar">Parar</button>
+        <button id="exportar">Exportar CSV</button>
+        <button id="limpar" class="perigo">Limpar resultados</button>
+      </div>
+
+      <small>
+        Se aparecer uma verificação, resolva-a na aba e depois clique em
+        Continuar. Não feche a aba durante a coleta.
+      </small>
+    </main>
+    <script src="popup.js"></script>
+  </body>
+</html>

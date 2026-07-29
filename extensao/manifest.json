@@ -1,0 +1,33 @@
+{
+  "manifest_version": 3,
+  "name": "Pesquisador de Imóveis",
+  "version": "0.1.0",
+  "description": "Coleta anúncios do Imovelweb usando uma aba normal do navegador.",
+  "permissions": [
+    "activeTab",
+    "downloads",
+    "storage",
+    "tabs"
+  ],
+  "host_permissions": [
+    "https://www.imovelweb.com.br/*"
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "Pesquisador de Imóveis"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://www.imovelweb.com.br/*"
+      ],
+      "js": [
+        "content.js"
+      ],
+      "run_at": "document_idle"
+    }
+  ]
+}

@@ -33,6 +33,26 @@ O Edge sera aberto e o programa aguardara por ate 3 minutos. Conclua manualmente
 a verificacao na janela; depois disso, a coleta continuara automaticamente. O
 programa nao resolve nem contorna CAPTCHA.
 
+## Extensao para coletar uma listagem
+
+A pasta `extensao/` contem uma extensao para Edge e Chrome. Ela usa uma aba
+normal do seu navegador, percorre os anuncios da listagem de forma sequencial e
+exporta os resultados em CSV.
+
+No Edge:
+
+1. Abra `edge://extensions`.
+2. Ative o **Modo de desenvolvedor**.
+3. Clique em **Carregar sem pacote**.
+4. Escolha a pasta `extensao` deste projeto.
+5. Abra uma listagem do Imovelweb e conclua qualquer verificacao normalmente.
+6. Abra a extensao, escolha os limites e clique em **Iniciar coleta**.
+
+Comece com uma pagina e poucos anuncios. A extensao reutiliza a mesma aba e
+espera o intervalo configurado entre navegacoes. Se encontrar outra verificacao,
+ela pausa para que voce a conclua manualmente. Depois, abra a extensao e clique
+em **Continuar**.
+
 ## Testes
 
 ```powershell
