@@ -1,10 +1,42 @@
-# Pesquisador de Imoveis
+# Pesquisador de Imóveis
 
-Primeira etapa do projeto: abrir o link de **um unico anuncio** do Imovelweb e
-mostrar no terminal os dados encontrados. Esta versao ainda nao percorre paginas
-de busca, grava no SQLite nem exporta para Excel.
+Extensão para Microsoft Edge e Google Chrome que coleta anúncios de uma
+listagem do Imovelweb e os organiza em uma planilha. Ela navega pelos anúncios
+usando uma aba normal do navegador, para que o usuário possa concluir
+verificações de segurança quando forem exibidas.
 
-## Instalacao
+## O que a extensão coleta
+
+Para cada anúncio encontrado, a extensão registra título, preço, endereço,
+área, quantidade de quartos, banheiros e vagas, código de referência,
+descrição, URL e data/hora da coleta. Os resultados podem ser baixados em
+`.xlsx` (Excel) ou `.csv`.
+
+É possível limitar a quantidade de páginas e anúncios, além de configurar o
+intervalo entre as navegações. A coleta pode ser parada e retomada; caso o
+Imovelweb peça uma verificação, conclua-a na aba e use **Continuar** na
+extensão. Ela não resolve nem contorna CAPTCHAs.
+
+## Instalação da extensão
+
+1. Abra `edge://extensions` no Edge ou `chrome://extensions` no Chrome.
+2. Ative o **Modo de desenvolvedor**.
+3. Clique em **Carregar sem pacote**.
+4. Selecione a pasta `extensao` deste projeto.
+5. Abra uma página de listagem em `www.imovelweb.com.br`.
+6. Abra a extensão, defina os limites e clique em **Iniciar coleta**.
+
+Comece com uma página e poucos anúncios para validar a coleta. Não feche a aba
+usada durante o processo. Ao terminar, escolha **Exportar Excel** ou
+**Exportar CSV**.
+
+## Coleta de um anúncio pela linha de comando
+
+O projeto também inclui uma ferramenta Python para abrir o link de um único
+anúncio do Imovelweb e mostrar os dados extraídos no terminal. Ela não percorre
+listagens nem exporta planilhas.
+
+### Instalação
 
 No PowerShell, dentro da pasta do projeto:
 
@@ -14,46 +46,18 @@ python -m venv .venv
 python -m pip install -e ".[dev]"
 ```
 
-O programa usa o Microsoft Edge instalado no computador para carregar a pagina.
-Por padrao, ele funciona sem abrir uma janela.
-
-## Uso
+### Uso
 
 ```powershell
 python main.py "https://www.imovelweb.com.br/propriedades/SEU-ANUNCIO.html"
 ```
 
-Se o site mostrar uma verificacao de seguranca, use o modo visivel:
+Se o site exibir uma verificação de segurança, abra o navegador em modo
+visível e conclua-a manualmente:
 
 ```powershell
 python main.py "https://www.imovelweb.com.br/propriedades/SEU-ANUNCIO.html" --visivel
 ```
-
-O Edge sera aberto e o programa aguardara por ate 3 minutos. Conclua manualmente
-a verificacao na janela; depois disso, a coleta continuara automaticamente. O
-programa nao resolve nem contorna CAPTCHA.
-
-## Extensao para coletar uma listagem
-
-A pasta `extensao/` contem uma extensao para Edge e Chrome. Ela usa uma aba
-normal do seu navegador, percorre os anuncios da listagem de forma sequencial e
-exporta os resultados em CSV.
-
-No Edge:
-
-1. Abra `edge://extensions`.
-2. Ative o **Modo de desenvolvedor**.
-3. Clique em **Carregar sem pacote**.
-4. Escolha a pasta `extensao` deste projeto.
-5. Abra uma listagem do Imovelweb e conclua qualquer verificacao normalmente.
-6. Abra a extensao, escolha os limites e clique em **Iniciar coleta**.
-
-Comece com uma pagina e poucos anuncios. A extensao reutiliza a mesma aba e
-espera o intervalo configurado entre navegacoes. Se encontrar outra verificacao,
-ela pausa para que voce a conclua manualmente. Depois, abra a extensao e clique
-em **Continuar**. Ao final, use **Exportar Excel** para gerar uma planilha
-`.xlsx` formatada ou **Exportar CSV** para o formato de texto compativel com
-Excel em portugues.
 
 ## Testes
 
